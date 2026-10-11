@@ -42,7 +42,7 @@
 Подключитесь к роутеру по SSH (`ssh root@192.168.1.1`) и выполните:
 
 ```sh
-wget -O /tmp/install-bobr-theme.sh https://raw.githubusercontent.com/GITHUB_USER/luci-theme-bobr/main/install-bobr-theme.sh && sh /tmp/install-bobr-theme.sh
+wget -O /tmp/install-bobr-theme.sh https://raw.githubusercontent.com/I22rusIBarney/luci-theme-bobr/main/install-bobr-theme.sh && sh /tmp/install-bobr-theme.sh
 ```
 
 ### Вариант 2. С компьютера
@@ -74,7 +74,7 @@ make package/feeds/luci/luci-theme-bobr/compile
 ## Удаление
 
 ```sh
-wget -O /tmp/install-bobr-theme.sh https://raw.githubusercontent.com/GITHUB_USER/luci-theme-bobr/main/install-bobr-theme.sh && sh /tmp/install-bobr-theme.sh --remove
+wget -O /tmp/install-bobr-theme.sh https://raw.githubusercontent.com/I22rusIBarney/luci-theme-bobr/main/install-bobr-theme.sh && sh /tmp/install-bobr-theme.sh --remove
 ```
 
 Тема и Панель удалятся, интерфейс вернётся к стандартной теме.
