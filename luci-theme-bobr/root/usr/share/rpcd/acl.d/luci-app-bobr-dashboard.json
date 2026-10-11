@@ -1,0 +1,63 @@
+{
+	"luci-app-bobr-dashboard": {
+		"description": "Панель темы «Бобр»",
+		"read": {
+			"ubus": {
+				"luci-rpc": [
+					"getHostHints",
+					"getDHCPLeases",
+					"getNetworkDevices",
+					"getWirelessDevices"
+				],
+				"iwinfo": [
+					"assoclist",
+					"info"
+				],
+				"network.interface": [
+					"dump"
+				],
+				"system": [
+					"info",
+					"board"
+				],
+				"service": [
+					"list"
+				]
+			},
+			"file": {
+				"/proc/net/arp": [
+					"read"
+				],
+				"/etc/init.d/ssclash": [
+					"list",
+					"read"
+				],
+				"/etc/init.d/podkop": [
+					"list",
+					"read"
+				],
+				"/etc/init.d/jarvis-music": [
+					"list",
+					"read"
+				],
+				"/etc/init.d/dnsmasq": [
+					"list",
+					"read"
+				]
+			},
+			"uci": [
+				"wireless"
+			]
+		},
+		"write": {
+			"ubus": {
+				"luci": [
+					"setInitAction"
+				]
+			},
+			"uci": [
+				"wireless"
+			]
+		}
+	}
+}

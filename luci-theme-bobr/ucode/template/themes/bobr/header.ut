@@ -1,0 +1,90 @@
+{#
+ Тема «Бобр» для LuCI (OpenWrt 23.05): боковое меню, карточки, светлая и тёмная версии.
+ Основана на luci-theme-bootstrap (Apache License 2.0).
+-#}
+{%
+	import { getuid, getspnam } from 'luci.core';
+	const boardinfo = ubus.call('system', 'board');
+	http.prepare_content('text/html; charset=UTF-8');
+-%}
+<!DOCTYPE html>
+<html lang="{{ dispatcher.lang }}">
+	<head>
+		<meta charset="utf-8">
+		<title>{{ striptags(`${boardinfo.hostname ?? '?'}${node ? ` - ${node.title}` : ''}`) }} - LuCI</title>
+		<script type="text/javascript">
+			(function() {
+				var root = document.documentElement, mq = window.matchMedia('(prefers-color-scheme: dark)');
+				window.bobrApplyTheme = function() {
+					var m = 'auto';
+					try { m = localStorage.getItem('bobr-theme') || 'auto'; } catch (e) {}
+					root.setAttribute('data-theme-mode', m);
+					root.setAttribute('data-darkmode', m == 'dark' || (m == 'auto' && mq.matches));
+				};
+				mq.addEventListener('change', window.bobrApplyTheme);
+				window.bobrApplyTheme();
+			})();
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#2a6df4">
+		<link rel="stylesheet" href="{{ media }}/cascade.css">
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a6df4'/%3E%3Cpath d='M9 19a7 7 0 0 1 14 0' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='20' r='2.2' fill='white'/%3E%3C/svg%3E">
+		{% if (node?.css): %}
+		<link rel="stylesheet" href="{{ resource }}/{{ node.css }}">
+		{% endif %}
+		{% if (css): %}
+		<style title="text/css">{{ css }}</style>
+		{% endif %}
+		<script src="{{ dispatcher.build_url('admin/translations', dispatcher.lang) }}"></script>
+		<script src="{{ resource }}/cbi.js"></script>
+		<script src="{{ media }}/names.js"></script>
+	</head>
+
+	<body class="bobr lang_{{ dispatcher.lang }} {{ blank_page ? 'bobr-blank' : '' }} {{ entityencode(striptags(node?.title ?? ''), true) }}" data-page="{{ entityencode(join('-', ctx.request_path), true) }}">
+		{% if (!blank_page): %}
+		<aside id="sidebar">
+			<a class="bobr-brand" href="/">
+				<span class="bobr-logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 19a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M5 15.5a11.5 11.5 0 0 1 22 0" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".55"/><circle cx="16" cy="20.5" r="2.4" fill="currentColor"/></svg></span>
+				<span class="bobr-host">{{ striptags(boardinfo.hostname ?? '?') }}<small>{{ striptags(boardinfo.model ?? '') }}</small></span>
+			</a>
+			<nav id="sidemenu"></nav>
+			<div class="bobr-side-bottom" id="sidebottom"></div>
+		</aside>
+		<div id="sidebar-overlay"></div>
+		<div id="page">
+		<header class="topbar">
+			<button id="menutoggle" type="button" aria-label="Меню"><span></span><span></span><span></span></button>
+			<div class="crumbs" id="crumbs"></div>
+			<div id="indicators" class="pull-right"></div>
+		</header>
+
+		<div id="maincontent" class="container">
+			{% if (getuid() == 0 && getspnam('root')?.pwdp === ''): %}
+				<div class="alert-message warning">
+					<h4>{{ _('No password set!') }}</h4>
+					<p>{{ _('There is no password set on this router. Please configure a root password to protect the web interface.') }}</p>
+					{% if (dispatcher.lookup("admin/system/admin")): %}
+					  <div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/admin") }}">{{ _('Go to password configuration...') }}</a></div>
+					{% endif %}
+				</div>
+			{% endif %}
+
+			{% if (boardinfo.rootfs_type == "initramfs"): %}
+				<div class="alert-message warning">
+					<h4>{{ _('System running in recovery (initramfs) mode.') }}</h4>
+					<p>{{ _('No changes to settings will be stored and are lost after rebooting. This mode should only be used to install a firmware upgrade') }}</p>
+					{% if (dispatcher.lookup("admin/system/flash")): %}
+					  <div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/flash") }}">{{ _('Go to firmware upgrade...') }}</a></div>
+					{% endif %}
+				</div>
+			{% endif %}
+
+			<noscript>
+				<div class="alert-message warning">
+					<h4>{{ _('JavaScript required!') }}</h4>
+					<p>{{ _('You must enable JavaScript in your browser or LuCI will not work properly.') }}</p>
+				</div>
+			</noscript>
+
+			<div id="tabmenu" style="display:none"></div>
+		{% endif %}

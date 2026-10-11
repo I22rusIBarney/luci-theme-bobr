@@ -1,0 +1,7 @@
+#!/bin/sh
+# Регистрирует тему «Бобр» и включает её по умолчанию.
+uci -q get luci.themes.Bobr >/dev/null || uci set luci.themes.Bobr=/luci-static/bobr
+uci set luci.main.mediaurlbase=/luci-static/bobr
+uci commit luci
+rm -rf /tmp/luci-* 2>/dev/null
+exit 0
