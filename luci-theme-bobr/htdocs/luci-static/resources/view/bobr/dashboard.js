@@ -20,10 +20,10 @@ const callService   = rpc.declare({ object: 'service', method: 'list', params: [
 const callInit      = rpc.declare({ object: 'luci', method: 'setInitAction', params: [ 'name', 'action' ], expect: { result: false } });
 
 const SERVICES = [
-	[ 'ssclash', 'SSClash', 'VPN для всей домашней сети' ],
-	[ 'podkop', 'Podkop', 'Обход блокировок для выбранных сайтов' ],
-	[ 'jarvis-music', 'Музыкальный агент', 'Музыка на колонках Алисы' ],
-	[ 'dnsmasq', 'DNS и DHCP', 'Раздаёт адреса устройствам в сети' ]
+	[ 'ssclash', 'SSClash', _('VPN для всей домашней сети') ],
+	[ 'podkop', 'Podkop', _('Обход блокировок для выбранных сайтов') ],
+	[ 'jarvis-music', _('Музыкальный агент'), _('Музыка на колонках Алисы') ],
+	[ 'dnsmasq', _('DNS и DHCP'), _('Раздаёт адреса устройствам в сети') ]
 ];
 
 const CSS = `
@@ -120,15 +120,15 @@ const HISTORY = 60;          /* точек на графике, по одной 
 
 function bits(v) {
 	if (v == null || isNaN(v)) return '—';
-	if (v >= 1e9) return (v / 1e9).toFixed(2) + ' Гбит/с';
-	if (v >= 1e6) return (v / 1e6).toFixed(2) + ' Мбит/с';
-	if (v >= 1e3) return (v / 1e3).toFixed(1) + ' кбит/с';
-	return Math.round(v) + ' бит/с';
+	if (v >= 1e9) return (v / 1e9).toFixed(2) + ' ' + _('Гбит/с');
+	if (v >= 1e6) return (v / 1e6).toFixed(2) + ' ' + _('Мбит/с');
+	if (v >= 1e3) return (v / 1e3).toFixed(1) + ' ' + _('кбит/с');
+	return Math.round(v) + ' ' + _('бит/с');
 }
 
 function bytes(v) {
 	if (v == null || isNaN(v)) return '—';
-	const u = [ 'Б', 'КБ', 'МБ', 'ГБ', 'ТБ' ];
+	const u = [ _('Б'), _('КБ'), _('МБ'), _('ГБ'), _('ТБ') ];
 	let i = 0;
 	while (v >= 1024 && i < u.length - 1) { v /= 1024; i++; }
 	return (i ? v.toFixed(v < 10 ? 2 : 1) : v) + ' ' + u[i];
@@ -137,7 +137,7 @@ function bytes(v) {
 function duration(s) {
 	if (!s) return '—';
 	const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
-	return (d ? d + ' д ' : '') + (d || h ? h + ' ч ' : '') + m + ' мин';
+	return (d ? d + ' ' + _('д') + ' ' : '') + (d || h ? h + ' ' + _('ч') + ' ' : '') + m + ' ' + _('мин');
 }
 
 function clock(t) {
@@ -183,7 +183,7 @@ function pill(text, kind) {
 
 function signalBars(dbm) {
 	const lvl = dbm >= -55 ? 4 : dbm >= -65 ? 3 : dbm >= -75 ? 2 : 1;
-	return E('span', { 'class': 'bd-bars', 'title': dbm + ' дБм' }, [1, 2, 3, 4].map(i => E('i', { 'class': i <= lvl ? 'on' : '' })));
+	return E('span', { 'class': 'bd-bars', 'title': dbm + ' ' + _('дБм') }, [1, 2, 3, 4].map(i => E('i', { 'class': i <= lvl ? 'on' : '' })));
 }
 
 return view.extend({
@@ -215,9 +215,9 @@ return view.extend({
 
 	band(radio) {
 		const b = radio?.config?.band, ch = +(radio?.config?.channel || 0);
-		if (b == '5g' || ch > 14) return '5 ГГц';
-		if (b == '6g') return '6 ГГц';
-		return '2,4 ГГц';
+		if (b == '5g' || ch > 14) return _('5 ГГц');
+		if (b == '6g') return _('6 ГГц');
+		return _('2,4 ГГц');
 	},
 
 	/* ---------- Интернет ---------- */
@@ -237,21 +237,21 @@ return view.extend({
 		this.rateDown = E('span', {}, [ '…' ]);
 		this.rateUp = E('span', {}, [ '…' ]);
 
-		return card('Интернет', [
+		return card(_('Интернет'), [
 			E('div', { 'class': 'bd-conn' }, [
 				E('span', { 'class': 'bd-conn-ico' }, [ ico('globe') ]),
-				E('div', { 'class': 'bd-conn-name' }, [ 'Подключение через WAN', E('small', {}, [ (w.proto == 'dhcp' ? 'DHCP-клиент' : w.proto || '') + (this.wanDev ? ' · ' + this.wanDev : '') ]) ]),
-				E('div', { 'class': 'bd-conn-state' }, [ w.up ? pill('● Подключено', 'ok') : pill('● Нет подключения', 'err'), E('small', {}, [ w.up ? duration(w.uptime) : '' ]) ])
+				E('div', { 'class': 'bd-conn-name' }, [ _('Подключение через WAN'), E('small', {}, [ (w.proto == 'dhcp' ? _('DHCP-клиент') : w.proto || '') + (this.wanDev ? ' · ' + this.wanDev : '') ]) ]),
+				E('div', { 'class': 'bd-conn-state' }, [ w.up ? pill(_('● Подключено'), 'ok') : pill(_('● Нет подключения'), 'err'), E('small', {}, [ w.up ? duration(w.uptime) : '' ]) ])
 			]),
 			this.chart,
-			E('div', { 'class': 'bd-legend' }, [ E('span', { 'class': 'dl' }, [ '● Загрузка ', this.rateDown ]), E('span', { 'class': 'ul' }, [ '● Отдача ', this.rateUp ]) ]),
+			E('div', { 'class': 'bd-legend' }, [ E('span', { 'class': 'dl' }, [ '● ' + _('Загрузка') + ' ', this.rateDown ]), E('span', { 'class': 'ul' }, [ '● ' + _('Отдача') + ' ', this.rateUp ]) ]),
 			kv([
-				[ 'IP-адрес', addr ? addr.address + '/' + addr.mask : '—' ],
-				[ 'Шлюз', gw ? gw.nexthop : '—' ],
-				[ 'MAC-адрес', dev.mac || '—' ],
-				[ 'DNS-серверы', (w['dns-server'] || []).join(', ') || '—' ],
-				[ 'Получено', bytes(st.rx_bytes) ],
-				[ 'Отправлено', bytes(st.tx_bytes) ]
+				[ _('IP-адрес'), addr ? addr.address + '/' + addr.mask : '—' ],
+				[ _('Шлюз'), gw ? gw.nexthop : '—' ],
+				[ _('MAC-адрес'), dev.mac || '—' ],
+				[ _('DNS-серверы'), (w['dns-server'] || []).join(', ') || '—' ],
+				[ _('Получено'), bytes(st.rx_bytes) ],
+				[ _('Отправлено'), bytes(st.tx_bytes) ]
 			])
 		]);
 	},
@@ -321,21 +321,21 @@ return view.extend({
 					E('div', { 'class': 'bd-wifi-main' }, [
 						E('div', { 'class': 'bd-wifi-name' }, [ cfg.ssid || i.ifname, sw ]),
 						E('div', { 'class': 'bd-sub' }, [
-							band + (i.iwinfo?.channel || r.config?.channel ? ' · канал ' + (i.iwinfo?.channel || r.config.channel) : '') +
-							(r.config?.htmode ? ' · ' + r.config.htmode.replace(/^[A-Z]+/, '') + ' МГц' : '') +
-							' · клиентов: ' + clients
+							band + (i.iwinfo?.channel || r.config?.channel ? ' · ' + _('канал %s').format(i.iwinfo?.channel || r.config.channel) : '') +
+							(r.config?.htmode ? ' · ' + r.config.htmode.replace(/^[A-Z]+/, '') + ' ' + _('МГц') : '') +
+							' · ' + _('клиентов: %s').format(clients)
 						])
 					]),
-					E('a', { 'class': 'bd-btn', 'href': L.url('admin/network/wireless') }, [ 'Настроить' ])
+					E('a', { 'class': 'bd-btn', 'href': L.url('admin/network/wireless') }, [ _('Настроить') ])
 				]));
 			});
 		});
 
-		return card('Мои сети и Wi-Fi', blocks.length ? blocks : [ E('div', { 'class': 'bd-empty' }, [ 'Wi-Fi не найден' ]) ]);
+		return card(_('Мои сети и Wi-Fi'), blocks.length ? blocks : [ E('div', { 'class': 'bd-empty' }, [ _('Wi-Fi не найден') ]) ]);
 	},
 
 	toggleWifi(section, on, ssid) {
-		if (!on && !confirm('Выключить сеть «' + (ssid || section) + '»? Устройства в ней отключатся. Если вы сами подключены через неё, связь с роутером пропадёт.'))
+		if (!on && !confirm(_('Выключить сеть «%s»? Устройства в ней отключатся. Если вы сами подключены через неё, связь с роутером пропадёт.').format(ssid || section)))
 			return location.reload();
 		uci.set('wireless', section, 'disabled', on ? null : '1');
 		return uci.save().then(() => ui.changes.apply(true));
@@ -373,10 +373,10 @@ return view.extend({
 			]),
 			E('div', { 'class': 'bd-client-link' }, c.wifi
 				? [ E('span', { 'class': 'bd-tag' }, [ c.band ]), signalBars(c.signal) ]
-				: [ E('span', { 'class': 'bd-tag' }, [ 'Кабель' ]) ])
+				: [ E('span', { 'class': 'bd-tag' }, [ _('Кабель') ]) ])
 		]));
 
-		return card('Устройства в сети', rows.length ? rows : [ E('div', { 'class': 'bd-empty' }, [ 'Нет активных устройств' ]) ],
+		return card(_('Устройства в сети'), rows.length ? rows : [ E('div', { 'class': 'bd-empty' }, [ _('Нет активных устройств') ]) ],
 			E('span', { 'class': 'bd-count' }, [ String(list.length) ]));
 	},
 
@@ -386,14 +386,14 @@ return view.extend({
 			.sort((a, b) => (a == 'wan' ? -1 : b == 'wan' ? 1 : a.localeCompare(b, undefined, { numeric: true })));
 		if (!names.length) return '';
 
-		return card('Сетевые порты', [ E('div', { 'class': 'bd-ports' }, names.map(n => {
+		return card(_('Сетевые порты'), [ E('div', { 'class': 'bd-ports' }, names.map(n => {
 			const d = devices[n], link = d.link || {};
 			const up = link.carrier != null ? link.carrier : d.up;
-			const sp = link.speed > 0 ? (link.speed >= 1000 ? link.speed / 1000 + ' Гбит' : link.speed + ' Мбит') : '';
+			const sp = link.speed > 0 ? (link.speed >= 1000 ? link.speed / 1000 + ' ' + _('Гбит') : link.speed + ' ' + _('Мбит')) : '';
 			return E('div', { 'class': 'bd-port' + (up ? ' up' : '') }, [
 				E('div', { 'class': 'bd-port-box' }, [ ico(n == 'wan' ? 'globe' : 'port'), E('i', { 'class': 'bd-port-led' }) ]),
 				E('div', { 'class': 'bd-port-name' }, [ n == 'wan' ? 'WAN' : n.replace(/^lan/, 'LAN ') ]),
-				E('div', { 'class': 'bd-sub' }, [ up ? (sp || 'подключён') : '—' ])
+				E('div', { 'class': 'bd-sub' }, [ up ? (sp || _('подключён')) : '—' ])
 			]);
 		})) ]);
 	},
@@ -406,14 +406,14 @@ return view.extend({
 		const load = (info.load || [0])[0] / 65536;
 		const bar = (f, txt) => E('div', { 'class': 'bd-meter' }, [ E('div', { 'class': 'bd-meter-bar' }, [ E('i', { 'style': 'width:' + Math.min(100, Math.round(f * 100)) + '%' }) ]), E('span', {}, [ txt ]) ]);
 
-		return card('О системе', [ kv([
-			[ 'Нагрузка', bar(load / 4, load.toFixed(2)) ],
-			[ 'Память', bar(m.total ? used / m.total : 0, Math.round(used / m.total * 100) + '% · ' + bytes(used) + ' из ' + bytes(m.total)) ],
+		return card(_('О системе'), [ kv([
+			[ _('Нагрузка'), bar(load / 4, load.toFixed(2)) ],
+			[ _('Память'), bar(m.total ? used / m.total : 0, Math.round(used / m.total * 100) + '% · ' + bytes(used) + ' ' + _('из') + ' ' + bytes(m.total)) ],
 			sw.total ? [ 'Swap', bar(swUsed / sw.total, Math.round(swUsed / sw.total * 100) + '% (' + bytes(swUsed) + ')') ] : null,
-			[ 'Время работы', duration(info.uptime) ],
-			[ 'Модель', board.model || '—' ],
-			[ 'Прошивка', board.release?.description || '—' ],
-			[ 'Ядро', board.kernel || '—' ]
+			[ _('Время работы'), duration(info.uptime) ],
+			[ _('Модель'), board.model || '—' ],
+			[ _('Прошивка'), board.release?.description || '—' ],
+			[ _('Ядро'), board.kernel || '—' ]
 		]) ]);
 	},
 
@@ -425,10 +425,10 @@ return view.extend({
 			const inst = (st || {})[s[0]]?.instances || {};
 			const known = true;
 			const running = Object.values(inst).some(i => i.running);
-			const btn = E('button', { 'class': 'bd-btn', 'type': 'button' }, [ 'Перезапустить' ]);
+			const btn = E('button', { 'class': 'bd-btn', 'type': 'button' }, [ _('Перезапустить') ]);
 			btn.addEventListener('click', () => {
 				btn.disabled = true;
-				btn.textContent = 'Перезапускаю…';
+				btn.textContent = _('Перезапускаю…');
 				callInit(s[0], 'restart').then(() => setTimeout(() => location.reload(), 4000));
 			});
 
@@ -436,16 +436,16 @@ return view.extend({
 				E('label', { 'class': 'bd-svc-state' }, [ E('i', { 'class': running ? 'on' : (known ? 'off' : 'none') }) ]),
 				E('div', { 'class': 'bd-svc-main' }, [
 					E('div', { 'class': 'bd-svc-name' }, [ s[1] ]),
-					E('div', { 'class': 'bd-sub ' + (running ? 'ok' : 'warn') }, [ running ? 'Работает' : (known ? 'Остановлена' : 'Не установлена') ])
+					E('div', { 'class': 'bd-sub ' + (running ? 'ok' : 'warn') }, [ running ? _('Работает') : (known ? _('Остановлена') : _('Не установлена')) ])
 				]),
 				E('div', { 'class': 'bd-svc-descr' }, [ s[2],
-					s[0] == 'ssclash' ? E('a', { 'href': '%s//%s:9091/settings'.format(location.protocol, location.hostname), 'target': '_blank', 'rel': 'noopener' }, [ ' Открыть панель ', ico('ext', 'small') ]) : '' ]),
+					s[0] == 'ssclash' ? E('a', { 'href': '%s//%s:9091/settings'.format(location.protocol, location.hostname), 'target': '_blank', 'rel': 'noopener' }, [ ' ' + _('Открыть панель') + ' ', ico('ext', 'small') ]) : '' ]),
 				known ? btn : ''
 			]);
 		});
 
 		const shown = rows.filter(r => r);
-		return shown.length ? card('Службы', shown) : '';
+		return shown.length ? card(_('Службы'), shown) : '';
 	},
 
 	render(data) {

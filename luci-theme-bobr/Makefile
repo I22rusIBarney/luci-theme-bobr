@@ -10,8 +10,8 @@ include $(TOPDIR)/rules.mk
 LUCI_TITLE:=Bobr theme (sidebar, cards, dark mode, Keenetic-like dashboard)
 LUCI_DEPENDS:=+luci-theme-bootstrap
 PKG_LICENSE:=Apache-2.0
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.1.0
 
-include ../../luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature

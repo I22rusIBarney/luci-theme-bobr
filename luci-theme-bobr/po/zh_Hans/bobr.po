@@ -1,0 +1,212 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Панель"
+msgstr "仪表盘"
+
+msgid "Меню"
+msgstr "菜单"
+
+msgid "Быстрый доступ"
+msgstr "快速访问"
+
+msgid "Тема: авто"
+msgstr "主题：自动"
+
+msgid "Тема: светлая"
+msgstr "主题：浅色"
+
+msgid "Тема: тёмная"
+msgstr "主题：深色"
+
+msgid "Интернет"
+msgstr "互联网"
+
+msgid "Подключение через WAN"
+msgstr "WAN 连接"
+
+msgid "DHCP-клиент"
+msgstr "DHCP 客户端"
+
+msgid "● Подключено"
+msgstr "● 已连接"
+
+msgid "● Нет подключения"
+msgstr "● 未连接"
+
+msgid "Загрузка"
+msgstr "下载"
+
+msgid "Отдача"
+msgstr "上传"
+
+msgid "IP-адрес"
+msgstr "IP 地址"
+
+msgid "Шлюз"
+msgstr "网关"
+
+msgid "MAC-адрес"
+msgstr "MAC 地址"
+
+msgid "DNS-серверы"
+msgstr "DNS 服务器"
+
+msgid "Получено"
+msgstr "已接收"
+
+msgid "Отправлено"
+msgstr "已发送"
+
+msgid "Мои сети и Wi-Fi"
+msgstr "我的网络与 Wi-Fi"
+
+msgid "Wi-Fi не найден"
+msgstr "未找到 Wi-Fi"
+
+msgid "канал %s"
+msgstr "信道 %s"
+
+msgid "МГц"
+msgstr "MHz"
+
+msgid "клиентов: %s"
+msgstr "客户端：%s"
+
+msgid "Настроить"
+msgstr "设置"
+
+msgid "Выключить сеть «%s»? Устройства в ней отключатся. Если вы сами подключены через неё, связь с роутером пропадёт."
+msgstr "确定要关闭网络“%s”吗？该网络内的设备将断开连接。如果您正通过此网络连接，将失去与路由器的连接。"
+
+msgid "Устройства в сети"
+msgstr "网络中的设备"
+
+msgid "Нет активных устройств"
+msgstr "没有在线设备"
+
+msgid "Кабель"
+msgstr "有线"
+
+msgid "Сетевые порты"
+msgstr "网络端口"
+
+msgid "Гбит"
+msgstr "Gbps"
+
+msgid "Мбит"
+msgstr "Mbps"
+
+msgid "подключён"
+msgstr "已连接"
+
+msgid "О системе"
+msgstr "系统信息"
+
+msgid "Нагрузка"
+msgstr "负载"
+
+msgid "Память"
+msgstr "内存"
+
+msgid "из"
+msgstr "/"
+
+msgid "Время работы"
+msgstr "运行时间"
+
+msgid "Модель"
+msgstr "型号"
+
+msgid "Прошивка"
+msgstr "固件"
+
+msgid "Ядро"
+msgstr "内核"
+
+msgid "Службы"
+msgstr "服务"
+
+msgid "Работает"
+msgstr "运行中"
+
+msgid "Остановлена"
+msgstr "已停止"
+
+msgid "Не установлена"
+msgstr "未安装"
+
+msgid "Перезапустить"
+msgstr "重启"
+
+msgid "Перезапускаю…"
+msgstr "正在重启…"
+
+msgid "Открыть панель"
+msgstr "打开面板"
+
+msgid "Музыкальный агент"
+msgstr "音乐助手"
+
+msgid "DNS и DHCP"
+msgstr "DNS 与 DHCP"
+
+msgid "VPN для всей домашней сети"
+msgstr "适用于整个家庭网络的 VPN"
+
+msgid "Обход блокировок для выбранных сайтов"
+msgstr "为指定网站绕过封锁"
+
+msgid "Музыка на колонках Алисы"
+msgstr "在 Alice 智能音箱上播放音乐"
+
+msgid "Раздаёт адреса устройствам в сети"
+msgstr "为网络中的设备分配地址"
+
+msgid "5 ГГц"
+msgstr "5 GHz"
+
+msgid "6 ГГц"
+msgstr "6 GHz"
+
+msgid "2,4 ГГц"
+msgstr "2.4 GHz"
+
+msgid "Гбит/с"
+msgstr "Gbit/s"
+
+msgid "Мбит/с"
+msgstr "Mbit/s"
+
+msgid "кбит/с"
+msgstr "kbit/s"
+
+msgid "бит/с"
+msgstr "bit/s"
+
+msgid "Б"
+msgstr "B"
+
+msgid "КБ"
+msgstr "KB"
+
+msgid "МБ"
+msgstr "MB"
+
+msgid "ГБ"
+msgstr "GB"
+
+msgid "ТБ"
+msgstr "TB"
+
+msgid "д"
+msgstr "天"
+
+msgid "ч"
+msgstr "小时"
+
+msgid "мин"
+msgstr "分钟"
+
+msgid "дБм"
+msgstr "dBm"

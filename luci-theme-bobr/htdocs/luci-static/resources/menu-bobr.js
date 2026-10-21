@@ -152,7 +152,7 @@ return baseclass.extend({
 		ICONS._ext = 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5';
 		L.resolveDefault(fs.stat('/etc/init.d/ssclash'), null).then(st => {
 			if (!st) return;
-			nav.appendChild(E('div', { 'class': 'side-label' }, [ 'Быстрый доступ' ]));
+			nav.appendChild(E('div', { 'class': 'side-label' }, [ _('Быстрый доступ') ]));
 			nav.appendChild(E('a', {
 				'class': 'side-head side-quick',
 				'href': '%s//%s:9091/settings'.format(location.protocol, location.hostname),
@@ -165,7 +165,7 @@ return baseclass.extend({
 		const modeBtn = E('button', { 'type': 'button', 'class': 'side-mode' });
 		const paintMode = () => {
 			const m = document.documentElement.getAttribute('data-theme-mode') || 'auto';
-			const label = (MODES.find(x => x[0] == m) || MODES[0])[1];
+			const label = _((MODES.find(x => x[0] == m) || MODES[0])[1]);
 			modeBtn.innerHTML = '';
 			modeBtn.appendChild(icon('_mode', 'mode-' + m));
 			modeBtn.appendChild(E('span', {}, [ label ]));
