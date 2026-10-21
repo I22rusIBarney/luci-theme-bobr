@@ -53,7 +53,7 @@
 		<div id="sidebar-overlay"></div>
 		<div id="page">
 		<header class="topbar">
-			<button id="menutoggle" type="button" aria-label="Меню"><span></span><span></span><span></span></button>
+			<button id="menutoggle" type="button" aria-label="{{ _('Меню') }}"><span></span><span></span><span></span></button>
 			<div class="crumbs" id="crumbs"></div>
 			<div id="indicators" class="pull-right"></div>
 		</header>
